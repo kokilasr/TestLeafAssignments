@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "bd841b36-56de-4889-9e93-ee25833b38e3",
+		"name": "ServiceNowWeek1Exercise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29614883",
+		"_collection_link": "https://blue-comet-416577.postman.co/workspace/PostmanPractice~fabfdaea-ec76-4ab7-8d44-7555f4e466a4/collection/29614883-bd841b36-56de-4889-9e93-ee25833b38e3?action=share&source=collection_link&creator=29614883"
+	},
+	"item": [
+		{
+			"name": "RetrieveARecord",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Records retrieved - Status Code 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dev148957.service-now.com/api/now/table/incident/{{SystemID}}",
+					"protocol": "https",
+					"host": [
+						"dev148957",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident",
+						"{{SystemID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateNewIncident",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"//Get the full response from JSON\r",
+							"JSONResponse = pm.response.json();\r",
+							"\r",
+							"//set a global variable\r",
+							"pm.globals.set(\"SystemID\", JSONResponse.result.sys_id)\r",
+							"pm.globals.set(\"ShortDescription\", JSONResponse.result.short_description);\r",
+							"pm.globals.set(\"Description\", JSONResponse.result.description);\r",
+							"pm.globals.set(\"Approver\", JSONResponse.result.approval);\r",
+							"\r",
+							"//print the system id in the console\r",
+							"console.log(\"System id is\", pm.globals.get('SystemID'));\r",
+							"\r",
+							"//fetch the incident number\r",
+							"//const incidentnumber = /INC\\d{7}/;\r",
+							"const incidentnumber = /[A-Z]+[0-9]+/; \r",
+							"\r",
+							"//match the variable from the response\r",
+							"incnumber = pm.response.text().match(incidentnumber);\r",
+							"\r",
+							"//Print it in the console\r",
+							"console.log(\"value is\", incnumber);\r",
+							"\r",
+							"//verify the incident number is not null\r",
+							"pm.test(\"verifyIncidentNumberIsNotNull\", function () {\r",
+							"    pm.expect(incnumber).to.not.null;\r",
+							"    console.log(\"Incident number is not null\"); // Fixed console syntax\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"description\":\"Unable to enter data into tables\",\"short_description\":\"No access provided\",\"opened_by\":\"Kokila\",\"business_impact\":\"User is unable to raise incident requests\",\"priority\":\"1\",\"state\":\"1\",\"assigned_to\":\"Executive\",\"category\":\"Incident\",\"contact_type\":\"Email\",\"incident_state\":\"1\",\"severity\":\"1\",\"location\":\"Chennai\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev148957.service-now.com/api/now/table/incident?sys_id={{SystemID}}",
+					"protocol": "https",
+					"host": [
+						"dev148957",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident"
+					],
+					"query": [
+						{
+							"key": "sys_id",
+							"value": "{{SystemID}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RetrieveRecordsFromTable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dev148957.service-now.com/api/now/table/incident?sysparm_limit=1",
+					"protocol": "https",
+					"host": [
+						"dev148957",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident"
+					],
+					"query": [
+						{
+							"key": "sysparm_limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ModifyARecord",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"JSONUpdatedResponse = pm.response.json();\r",
+							"\r",
+							"//print the old value\r",
+							"console.log(\"Short description before modification is\", pm.globals.get('ShortDescription'));\r",
+							"console.log(\"Description before modifcation is\", pm.globals.get('Description'));\r",
+							"\r",
+							"//Get the updated value\r",
+							"pm.globals.set('UpdatedShortDescription', JSONUpdatedResponse.result.short_description );\r",
+							"console.log(\"Short description after modification is\", pm.globals.get('UpdatedShortDescription'));\r",
+							"pm.globals.set('UpdatedDescription', JSONUpdatedResponse.result.description );\r",
+							"console.log(\"Description after modification is\", pm.globals.get('UpdatedDescription'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"description\":\"Updated Text\",\"short_description\":\"Test\",\"opened_by\":\"Kokila\",\"business_impact\":\"User is unable to raise incident requests\",\"priority\":\"1\",\"state\":\"1\",\"assigned_to\":\"Executive\",\"category\":\"Incident\",\"contact_type\":\"Email\",\"incident_state\":\"1\",\"severity\":\"1\",\"location\":\"Chennai\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev148957.service-now.com/api/now/table/incident/{{SystemID}}",
+					"protocol": "https",
+					"host": [
+						"dev148957",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident",
+						"{{SystemID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteARecord",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dev148957.service-now.com/api/now/table/incident/{{SystemID}}",
+					"protocol": "https",
+					"host": [
+						"dev148957",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident",
+						"{{SystemID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateARecord",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"JSONPatchResponse = pm.response.json();\r",
+							"\r",
+							"//Get the updated value\r",
+							"pm.globals.set('OpenedBy', JSONPatchResponse.result.opened_by.value);\r",
+							"console.log(\"Opened by:\", pm.globals.get('OpenedBy'));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"opened_by\":\"Shree\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev148957.service-now.com/api/now/table/incident/{{SystemID}}",
+					"protocol": "https",
+					"host": [
+						"dev148957",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"incident",
+						"{{SystemID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "jpJ1n/Zi+K7W",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
