@@ -1,0 +1,471 @@
+{
+	"info": {
+		"_postman_id": "b57b2e86-cb82-41de-bf80-5448ee393de4",
+		"name": "JIRAWeek2Day2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29614883",
+		"_collection_link": "https://blue-comet-416577.postman.co/workspace/PostmanPractice~fabfdaea-ec76-4ab7-8d44-7555f4e466a4/collection/29614883-b57b2e86-cb82-41de-bf80-5448ee393de4?action=share&source=collection_link&creator=29614883"
+	},
+	"item": [
+		{
+			"name": "CreateBug201Response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"response = pm.response.json();\r",
+							"pm.globals.set(\"IssueID\", response.id);\r",
+							"\r",
+							"const keyid = /[A-Z]+-\\d*/;\r",
+							"\r",
+							"keyvalue = pm.response.text().match(keyid);\r",
+							"\r",
+							"pm.expect(keyvalue).to.not.null;\r",
+							"    console.log(\"Key value is not null\");\r",
+							"\r",
+							"// console.log(keyvalue);\r",
+							"// pm.test(\"VerifyKeyIsNotNull\", function () {\r",
+							"//     pm.expect(keyvalue).to.not.null;\r",
+							"//     console.log(\"Key value is not null\");\r",
+							"// });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"SP\"\r\n        },\r\n        \"summary\": \"create issue in RA project\",\r\n        \"description\": \"Creating of an issue using project keys and issue type names using the REST API\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/issue/",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBug401Response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ATATT3xFfGF03ckk49xsZrIWtANKV739VXRirBXRixBlp6uVEOlDmwWO42qFBpu_GHFXSeDfPBLHNmIMt47o6T0-",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "dannagpt@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"SP\"\r\n        },\r\n        \"summary\": \"create issue in RA project\",\r\n        \"description\": \"Creating of an issue using project keys and issue type names using the REST API\",\r\n        \"issuetype\": {\r\n            \"name\": \"Bug\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/issue/",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBug400Response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ATATT3xFfGF03ckk49xsZrIWtANKV739VXRirBXRixBlp6uVEOlDmwWO42qFBpu_GHFXSeDfPBLHNmIMt47o6T0-2ABdu2Pip7jHDCNQ03YAQcWvqOGof6jDHQshT4kHm5Okl7S5gGrBrrGtMx_AvhSzz-EASy3sFDPP4DHFPoX6VF6n0KiOmrc=6544E33C",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "dannagpt@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"project\": {\r\n            \"key\": \"SP\"\r\n        },\r\n        \"summary\": \"create issue in RA project\",\r\n        \"description\": \"Creating of an issue using project keys and issue type names using the REST API\",\r\n        \"issuetype\": {\r\n            \"name\": \r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/issue/",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchIssue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/issue/{{IssueID}}",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{IssueID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditIssue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n\r\n        \"description\": \"Bug creation Using REST API for testing\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/issue/{{IssueID}}",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{IssueID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteIssue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/issue/{{IssueID}}",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{IssueID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchIssue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/search?SP=project=”SP”",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"",
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "SP",
+							"value": "project=”SP”"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListIssues",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"listresponse = pm.response.json();\r",
+							"pm.globals.set(\"IssueType\", listresponse[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/issuetype",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issuetype"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SearchSpecificIssue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://testingnssystems.atlassian.net/rest/api/2/issuetype/{{IssueType}}",
+					"protocol": "https",
+					"host": [
+						"testingnssystems",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issuetype",
+						"{{IssueType}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "ATATT3xFfGF03ckk49xsZrIWtANKV739VXRirBXRixBlp6uVEOlDmwWO42qFBpu_GHFXSeDfPBLHNmIMt47o6T0-2ABdu2Pip7jHDCNQ03YAQcWvqOGof6jDHQshT4kHm5Okl7S5gGrBrrGtMx_AvhSzz-EASy3sFDPP4DHFPoX6VF6n0KiOmrc=6544E33C",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "dannagpt@gmail.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
